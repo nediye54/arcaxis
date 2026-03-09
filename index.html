@@ -1,142 +1,270 @@
 <!doctype html>
 <html lang="de">
 <head>
-
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
 <title>ArcAxis — System Monitoring</title>
-
 <meta name="description" content="ArcAxis entwickelt infrastrukturelle Systeme zur Diagnose struktureller Instabilität in Organisationen und Produktionssystemen.">
-
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&family=Syne:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
+*{box-sizing:border-box;margin:0;padding:0;}
 
-*{
-box-sizing:border-box;
-margin:0;
-padding:0;
+:root{
+  --green:#67f08a;
+  --green-dim:rgba(103,240,138,0.15);
+  --green-faint:rgba(103,240,138,0.05);
+  --bg:#080b10;
+  --surface:rgba(255,255,255,0.03);
+  --text:#dde1e7;
+  --muted:#697077;
 }
 
 body{
-background:#0b0e13;
-color:#e8e8e8;
-font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-height:100vh;
-display:flex;
-align-items:center;
-justify-content:center;
-overflow:hidden;
+  background:var(--bg);
+  color:var(--text);
+  font-family:'IBM Plex Mono',monospace;
+  height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
 }
 
+/* Noise overlay */
+body::before{
+  content:'';
+  position:fixed;
+  inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity:0.4;
+  pointer-events:none;
+  z-index:0;
+}
+
+/* Radial glow */
+body::after{
+  content:'';
+  position:fixed;
+  width:600px;height:600px;
+  background:radial-gradient(ellipse at center, rgba(103,240,138,0.04) 0%, transparent 70%);
+  top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  pointer-events:none;
+  z-index:0;
+}
+
+/* SVG canvas */
+.bg-canvas{
+  position:fixed;
+  inset:0;
+  z-index:1;
+}
+
+/* Content */
 .wrapper{
-text-align:center;
-max-width:720px;
-padding:40px;
-z-index:2;
+  text-align:center;
+  max-width:680px;
+  padding:48px 40px;
+  z-index:2;
+  position:relative;
+}
+
+/* Staggered reveal */
+.wrapper > *{
+  opacity:0;
+  transform:translateY(16px);
+  animation:fadeUp 0.7s forwards;
+}
+.wrapper > *:nth-child(1){animation-delay:0.1s;}
+.wrapper > *:nth-child(2){animation-delay:0.25s;}
+.wrapper > *:nth-child(3){animation-delay:0.4s;}
+.wrapper > *:nth-child(4){animation-delay:0.55s;}
+.wrapper > *:nth-child(5){animation-delay:0.7s;}
+.wrapper > *:nth-child(6){animation-delay:0.85s;}
+
+@keyframes fadeUp{
+  to{opacity:1;transform:translateY(0);}
+}
+
+/* Status badge */
+.status{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  font-size:10px;
+  letter-spacing:0.15em;
+  color:var(--green);
+  background:var(--green-faint);
+  border:1px solid var(--green-dim);
+  padding:5px 12px;
+  border-radius:2px;
+  margin-bottom:32px;
+  text-transform:uppercase;
+}
+
+.status-dot{
+  width:6px;height:6px;
+  background:var(--green);
+  border-radius:50%;
+  animation:pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse{
+  0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(103,240,138,0.4);}
+  50%{opacity:0.7;box-shadow:0 0 0 4px rgba(103,240,138,0);}
 }
 
 h1{
-font-size:46px;
-font-weight:600;
-letter-spacing:0.06em;
-margin-bottom:6px;
+  font-family:'Syne',sans-serif;
+  font-size:52px;
+  font-weight:700;
+  letter-spacing:0.04em;
+  line-height:1;
+  margin-bottom:8px;
+  color:#f0f2f5;
 }
 
 .subtitle{
-color:#8c939c;
-font-size:15px;
-letter-spacing:0.08em;
-margin-bottom:36px;
+  color:var(--muted);
+  font-size:10px;
+  letter-spacing:0.2em;
+  text-transform:uppercase;
+  margin-bottom:40px;
+}
+
+.divider{
+  width:40px;
+  height:1px;
+  background:var(--green-dim);
+  margin:0 auto 32px;
 }
 
 .text{
-color:#c4c8ce;
-line-height:1.7;
-margin-bottom:26px;
-font-size:16px;
+  color:#a0a8b0;
+  line-height:1.75;
+  margin-bottom:20px;
+  font-size:13px;
+  font-weight:300;
 }
 
-a{
-color:#67f08a;
-text-decoration:none;
+.demo-link{
+  display:inline-block;
+  margin-top:8px;
+  padding:10px 24px;
+  border:1px solid var(--green-dim);
+  color:var(--green);
+  text-decoration:none;
+  font-size:11px;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  transition:background 0.2s, border-color 0.2s;
 }
 
-a:hover{
-text-decoration:underline;
+.demo-link:hover{
+  background:var(--green-faint);
+  border-color:rgba(103,240,138,0.35);
 }
 
 .contact{
-margin-top:28px;
-font-size:15px;
-color:#9ca3ab;
+  margin-top:32px;
+  font-size:11px;
+  color:var(--muted);
+  letter-spacing:0.08em;
 }
 
-/* Hintergrund Arc */
-
-.orbit{
-position:absolute;
-width:900px;
-height:900px;
-border-radius:50%;
-border:1px solid rgba(103,240,138,0.15);
-top:50%;
-left:50%;
-transform:translate(-50%,-50%);
-animation:rotate 120s linear infinite;
+.contact a{
+  color:var(--muted);
+  text-decoration:none;
+  border-bottom:1px solid rgba(105,112,119,0.4);
+  padding-bottom:1px;
+  transition:color 0.2s, border-color 0.2s;
 }
 
-.orbit2{
-position:absolute;
-width:650px;
-height:650px;
-border-radius:50%;
-border:1px solid rgba(103,240,138,0.08);
-top:50%;
-left:50%;
-transform:translate(-50%,-50%);
-animation:rotateReverse 180s linear infinite;
+.contact a:hover{
+  color:var(--text);
+  border-color:var(--text);
 }
-
-@keyframes rotate{
-from{transform:translate(-50%,-50%) rotate(0deg);}
-to{transform:translate(-50%,-50%) rotate(360deg);}
-}
-
-@keyframes rotateReverse{
-from{transform:translate(-50%,-50%) rotate(360deg);}
-to{transform:translate(-50%,-50%) rotate(0deg);}
-}
-
 </style>
-
 </head>
 
 <body>
 
-<div class="orbit"></div>
-<div class="orbit2"></div>
+<!-- Animated arc system -->
+<svg class="bg-canvas" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <radialGradient id="arcGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#67f08a" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#67f08a" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Outer ring -->
+  <g transform="translate(500,500)">
+    <circle r="420" fill="none" stroke="rgba(103,240,138,0.06)" stroke-width="1"/>
+    <circle r="320" fill="none" stroke="rgba(103,240,138,0.09)" stroke-width="1"/>
+    <circle r="220" fill="none" stroke="rgba(103,240,138,0.06)" stroke-width="1"/>
+
+    <!-- Rotating arc 1 -->
+    <g style="animation:rotA 90s linear infinite;transform-origin:0 0">
+      <path d="M0,-420 A420,420 0 0,1 297,-297" fill="none" stroke="rgba(103,240,138,0.3)" stroke-width="1.5" stroke-linecap="round"/>
+      <circle cx="0" cy="-420" r="3" fill="#67f08a" opacity="0.7"/>
+    </g>
+
+    <!-- Rotating arc 2 (reverse) -->
+    <g style="animation:rotB 140s linear infinite;transform-origin:0 0">
+      <path d="M0,-320 A320,320 0 0,0 -226,-226" fill="none" stroke="rgba(103,240,138,0.2)" stroke-width="1" stroke-linecap="round"/>
+      <circle cx="0" cy="-320" r="2.5" fill="#67f08a" opacity="0.5"/>
+    </g>
+
+    <!-- Rotating arc 3 -->
+    <g style="animation:rotC 200s linear infinite;transform-origin:0 0">
+      <path d="M0,-220 A220,220 0 0,1 155,-155" fill="none" stroke="rgba(103,240,138,0.15)" stroke-width="1" stroke-linecap="round"/>
+      <circle cx="0" cy="-220" r="2" fill="#67f08a" opacity="0.4"/>
+    </g>
+
+    <!-- Static tick marks -->
+    <g stroke="rgba(103,240,138,0.2)" stroke-width="1">
+      <line x1="0" y1="-415" x2="0" y2="-425"/>
+      <line x1="415" y1="0" x2="425" y2="0"/>
+      <line x1="0" y1="415" x2="0" y2="425"/>
+      <line x1="-415" y1="0" x2="-425" y2="0"/>
+    </g>
+  </g>
+</svg>
+
+<style>
+@keyframes rotA{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+@keyframes rotB{from{transform:rotate(360deg);}to{transform:rotate(0deg);}}
+@keyframes rotC{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+</style>
 
 <div class="wrapper">
 
-<h1>ArcAxis</h1>
+  <div class="status">
+    <span class="status-dot"></span>
+    Operational
+  </div>
 
-<div class="subtitle">
-SYSTEM MONITORING
-</div>
+  <h1>ArcAxis</h1>
 
-<div class="text">
-Ein infrastrukturelles Framework zur Diagnose struktureller Instabilität
-in Organisationen und Produktionssystemen.
-</div>
+  <div class="subtitle">System Monitoring Framework</div>
 
-<div class="text">
-Demonstrator<br>
-<a href="https://mdg-indikation.de">mdg-indikation.de</a>
-</div>
+  <div class="divider"></div>
 
-<div class="contact">
-contact@arcaxis.de
-</div>
+  <div class="text">
+    Ein infrastrukturelles Framework zur Diagnose<br>
+    struktureller Instabilität in Organisationen<br>
+    und Produktionssystemen.
+  </div>
+
+  <a class="demo-link" href="https://mdg-indikation.de" target="_blank" rel="noopener">
+    Demonstrator → mdg-indikation.de
+  </a>
+
+  <div class="contact">
+    <a href="mailto:contact@arcaxis.de">contact@arcaxis.de</a>
+  </div>
 
 </div>
 
