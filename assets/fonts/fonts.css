@@ -1,0 +1,4 @@
+/* self-hosted: Cormorant Garamond + DM Mono (SIL OFL), Latin */
+@font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:400 600;font-display:swap;src:url(./cormorant-garamond-normal-latin-e99b45.woff2) format('woff2')}
+@font-face{font-family:'Cormorant Garamond';font-style:italic;font-weight:400 500;font-display:swap;src:url(./cormorant-garamond-italic-latin-fe99e3.woff2) format('woff2')}
+@font-face{font-family:'DM Mono';font-style:normal;font-weight:400 500;font-display:swap;src:url(./dm-mono-normal-latin-9bb717.woff2) format('woff2')}
