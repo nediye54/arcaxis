@@ -118,3 +118,30 @@ em{font-style:italic;color:var(--text)}
 
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.mark-lg circle{opacity:1}html{scroll-behavior:auto}}
 .list li > span:last-child b{display:block;margin-bottom:.15rem}
+
+/* ---- leise Fassung ---- */
+.quiet{min-height:calc(100svh - 4.2rem - 21rem);display:grid;align-items:center;padding-block:clamp(2rem,8vh,5rem)}
+.quiet__grid{display:grid;gap:2.5rem;align-items:center}
+@media (min-width:860px){.quiet__grid{grid-template-columns:1.4fr .8fr}}
+.quiet h1{font-size:clamp(4rem,2rem + 11vw,11rem);line-height:.9;letter-spacing:-.02em;font-weight:400}
+.quiet__sub{margin-top:1.6rem;font-family:var(--mono);font-size:.78rem;letter-spacing:.34em;text-transform:uppercase;color:var(--muted)}
+.mark-draw svg path{stroke-dasharray:520;stroke-dashoffset:520;animation:draw 1.6s var(--ease) .2s forwards}
+.mark-draw svg line{stroke-dasharray:280;stroke-dashoffset:280;animation:draw 1.1s var(--ease) 1.1s forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.mark-draw circle:nth-of-type(1){animation-delay:1.9s}.mark-draw circle:nth-of-type(2){animation-delay:2.2s}.mark-draw circle:nth-of-type(3){animation-delay:2.5s}
+.work{padding-block:0 3rem}
+.work__t{color:var(--faint);margin-bottom:1rem}
+.rows{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.row{display:grid;grid-template-columns:1.1rem minmax(8rem,1fr) 1.2fr 1.5rem;align-items:center;gap:1.2rem;padding:1.15rem .2rem;border-bottom:1px solid var(--line);text-decoration:none;transition:background .25s,padding .25s var(--ease)}
+.row:hover{background:rgba(233,238,249,.03);padding-left:.8rem}
+.row__dot{width:.7rem;height:.7rem;border-radius:50%;background:var(--c)}
+.row__n{font-size:clamp(1.4rem,1.2rem + .8vw,1.9rem)}
+.row__d{font-family:var(--mono);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.row__a{color:var(--faint);transition:color .2s,transform .25s var(--ease)}
+.row:hover .row__a{color:var(--c);transform:translate(2px,-2px)}
+@media (max-width:560px){.row{grid-template-columns:1.1rem 1fr 1.5rem}.row__d{display:none}}
+.note{margin-top:2.2rem;font-family:var(--mono);font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.note a{color:var(--text);text-decoration:none;border-bottom:1px solid var(--line-2)}
+.note a:hover{border-bottom-color:var(--text)}
+@media (prefers-reduced-motion:reduce){.mark-draw svg path,.mark-draw svg line{stroke-dashoffset:0}}
+@media (max-width:859px){.quiet{min-height:auto;padding-block:3rem 2.5rem}.mark-lg{width:min(70%,16rem);justify-self:start}}
