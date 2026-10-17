@@ -117,3 +117,4 @@ em{font-style:italic;color:var(--text)}
 .legal a{color:var(--mint)}
 
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.mark-lg circle{opacity:1}html{scroll-behavior:auto}}
+.list li > span:last-child b{display:block;margin-bottom:.15rem}
