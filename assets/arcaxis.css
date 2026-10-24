@@ -171,3 +171,23 @@ em{font-style:italic;color:var(--text)}
 .js .rv{opacity:0;transform:translateY(20px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
 .js .rv.in{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){.js .rv{opacity:1;transform:none}}
+
+/* ---- Referenzen: Gruppen (Oberpunkt + Unterprojekte) ---- */
+.c-sky2{--c:#8fd3ff}.c-pink{--c:#ff4fa3}
+.grp{padding-block:clamp(2.2rem,6vh,3.6rem);border-top:1px solid var(--line)}
+.grp__head{display:grid;gap:.2rem;margin-bottom:clamp(1.6rem,4vh,2.6rem)}
+.grp__head h2{font-size:clamp(2.2rem,1.5rem + 2.6vw,3.6rem);font-weight:400;margin:.6rem 0 .5rem}
+.grp__tag{color:var(--faint);margin-top:.9rem;font-size:.66rem}
+.grp__kids{display:grid;gap:2.2rem;padding-left:clamp(1rem,2.5vw,1.8rem);border-left:1px solid var(--c)}
+@media (min-width:760px){.grp__kids.n2{grid-template-columns:repeat(2,1fr)}.grp__kids.n3{grid-template-columns:repeat(3,1fr);gap:1.6rem}}
+@media (min-width:900px){.grp__head{grid-template-columns:1.5fr 1fr;column-gap:3.5rem;align-items:end}.grp__head .item__no{grid-column:1/-1}.grp__head h2{margin:.4rem 0 0;grid-row:2/4;align-self:end}.grp__head .item__one,.grp__head .grp__tag{grid-column:2}.grp__head .grp__tag{margin-top:.4rem}}
+.kid{display:grid;align-content:start}
+.kid .shot{margin-bottom:1.1rem}
+.kid h3{font-size:clamp(1.5rem,1.2rem + 1vw,2rem);font-weight:400;margin-bottom:.4rem;color:var(--text)}
+.kid h3::before{content:"";display:inline-block;width:.45rem;height:.45rem;border-radius:50%;background:var(--c);margin-right:.6rem;vertical-align:.3em}
+.kid .item__one{font-size:.95em}
+.kid .item__link{margin-top:.9rem}
+.grp__sub{color:var(--c);margin:0}
+.item .grp__sub{margin-top:-.2rem}
+.grp__head{grid-template-columns:none}
+@media (min-width:900px){.grp__head{grid-template-columns:none}.grp__head h2{grid-row:auto}}
