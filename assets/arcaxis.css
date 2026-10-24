@@ -147,7 +147,7 @@ em{font-style:italic;color:var(--text)}
 @media (max-width:859px){.quiet{min-height:auto;padding-block:3rem 2.5rem}.mark-lg{width:min(70%,16rem);justify-self:start}}
 
 /* ---- Referenzen (schlicht) ---- */
-.c-lime2{--c:#b8f040}.c-ember{--c:#e8683a}
+.c-lime2{--c:#b8f040}.c-ember{--c:#e8683a}.c-sky{--c:#6f8cff}
 .rhead{padding-block:clamp(3rem,9vh,6rem) clamp(1.5rem,4vh,3rem)}
 .rhead h1{font-size:clamp(3.4rem,2rem + 7vw,8rem);line-height:.9;letter-spacing:-.02em;font-weight:400}
 .list{display:grid}
